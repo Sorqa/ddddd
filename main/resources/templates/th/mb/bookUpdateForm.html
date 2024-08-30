@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>updateForm</title>
+</head>
+<body>
+<form id="bookupdateForm" th:action="@{/book/update}" method="post">
+  <div><label>번호</label>
+    <input type="hidden" name="no" id="no" th:value="${book.no}">
+    <span th:text="${book.no}"></span>
+  </div>
+  <div><label>제목</label>
+    <span th:text="${book.title}"></span>
+  </div>
+  <div><label>저자</label>
+    <span th:text="${book.author}"></span>
+  </div>
+  <div>
+    <label>출판사</label>
+    <span th:text="${book.author}"></span>
+  </div>
+  <div>
+    <label for="pubdate">출판일</label>
+    <input type="Date" name="pubdate" id="pubdate" th:value="${book.pubdate}">
+  </div>
+  <div>
+    <label>쪽수</label>
+    <span th:text="${book.pages}"></span>
+  </div>
+  <div>
+    <label for="price">가격</label>
+    <input type="number" name="price" id="price" th:value="${book.price}">
+  </div>
+  <div>
+    <label>커버</label>
+    <!--<input type="file" name="cover" id="cover" accept="image/*">-->
+    <img th:src="@{/img/{cover}(cover=${book.cover})}" alt="Cover Image"/>
+  </div>
+  <div>
+    <button type="submit">추가</button>
+  </div>
+</form>
+</body>
+</html>

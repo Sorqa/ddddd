@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>Mybatis 도서목록</title>
+</head>
+<body>
+<main>
+  <h3>Mybatis 도서목록</h3>
+  <table>
+    <tr><th>번호</th><th>제목</th><th>저자</th><th>총페이지수</th><th>출판사</th><th>출판일</th><th>가격</th></tr>
+    <tr th:each="b:${pageInfo.list}">
+      <td>[[${b.no}]]</td><td>[[${b.title}]]</td><td>[[${b.author}]]</td><td>[[${b.pages}]]</td>
+      <td>[[${b.publisher}]]</td><td>[[${b.pubdate}]]</td><td>[[${b.price}]]</td>
+    </tr>
+  </table>
+  <fieldset>
+    <legend>PageInfo 속성들</legend>
+    <ol>
+      <li>pageNum : [[${pageInfo.pageNum}]] (현재 페이지 번호)</li>
+      <li>pageSize : [[${pageInfo.pageSize}]] (한 화면의 아이템 수)</li>
+      <li>size : [[${pageInfo.size}]] (한 화면의 아이템 수)</li>
+      <li>startRow : [[${pageInfo.startRow}]] (시작 행번호)</li>
+      <li>endRow : [[${pageInfo.endRow}]] (끝 행번호)</li>
+      <li>total : [[${pageInfo.total}]] (총 행수)</li>
+      <li>pages : [[${pageInfo.pages}]] (총 페이지 수)</li>
+      <li>isPrePage : [[${pageInfo.prePage}]] (앞 페이지 수)</li>
+      <li>isFirstPage : [[${pageInfo.isFirstPage}]] (첫 페이지인가?)</li>
+      <li>isLastPage : [[${pageInfo.isLastPage}]] (마지막 페이지인가?)</li>
+      <li>hasPreviousPage : [[${pageInfo.hasPreviousPage}]] (앞 페이지가 존재하나?)</li>
+      <li>hasNextPage : [[${pageInfo.hasNextPage}]] (다음 페이지가 있나?)</li>
+      <li>navigatePages : [[${pageInfo.navigatePages}]] (8, 기본 설정된 페이지 링크 수)</li>
+      <li>navigateFirstPage : [[${pageInfo.navigateFirstPage}]] (첫 페이지 번호)</li>
+      <li>navigateLastPage : [[${pageInfo.navigateLastPage}]] (마지막 페이지 번호)</li>
+      <li>navigatepageNums : [[${pageInfo.navigatepageNums}]] (네비게이션에 사용될 페이지 번호 정수배열)</li>
+      <li>[[${#lists.size(pageInfo.navigatepageNums)}]] (현재 페이지 하단에 보여질 링크 수)</li>
+    </ol>
+    <div>
+     <span th:each="n : ${pageInfo.navigatepageNums}">
+    <a th:href="@{'/book/list/page/' + ${n}}"
+       th:style="${pageInfo.pageNum == n} ? 'font-size: 20px; color: red;' : ''">
+       [[${n}]]
+    </a>
+</span>
+
+    </div>
+  </fieldset>
+
+</main>
+</body>
+</html>

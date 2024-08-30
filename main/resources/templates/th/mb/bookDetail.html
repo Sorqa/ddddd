@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org"></html>
+<head>
+    <meta charset="UTF-8">
+    <title>bookDetail</title>
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+  <style type="text/css">
+    main > h3{text-align:center; }
+    section {width:fit-content; margin:0.5em auto; padding:1em; border:1px solid black;}
+    label { display:inline-block; width:5em; padding-right:1em; }
+    section>div{padding:0.2em;}
+    div>img { width:200px; }
+  </style>
+
+  <script type="text/javascript">
+    function bookdelete(no) {
+      if(!confirm('정말로 삭제할까요?')) return;
+      $.ajax({
+        url:'/book/delete/' + no,
+        method:'get',
+        cache:false,
+        dataType:'json',
+        success:function(res) {
+          alert(res.deleted ? '삭제 성공' : '실패');
+          if (res.deleted) location.href = "/book/list";
+            },
+            error:function(xhr,status,err) {
+            alert('에러:' + err);
+          }
+            });
+            }
+  </script>
+</head>
+<body>
+<main th:object = "${book}">
+  <h3>도서 상세보기</h3>
+  <div><label>번호</label>
+    <span th:text="*{no}"></span>
+  </div>
+  <div><label>제목</label>
+    <span th:text="*{title}"></span>
+  </div>
+  <div><label>저자</label>
+    <span th:text="*{author}"></span>
+  </div>
+  <div><label>출판사</label>
+    <span th:text="*{publisher}"></span>
+  </div>
+  <div><laebl>출판일</laebl>
+    <span th:text="*{pubdate}"></span>
+  </div>
+  <div><label>쪽수</label>
+    <span th:text="*{pages}"></span>
+  </div>
+  <div><label>가격</label>
+    <span th:text="*{price}"></span>
+  </div>
+  <div><label>이미지</label>
+    <img th:src="@{/img/{cover}(cover=${book.cover})}" alt="Cover Image"/>
+  </div>
+</main>
+<a th:href="@{'/book/update/'+ *{no}}"><button>수정</button></a>
+<a th:href="|javascript:bookdelete(*{no})|"><button>삭제</button></a>
+<a th:href="|/book/list|"><button>리스트보기</button></a>
+
+</body>
+</html>

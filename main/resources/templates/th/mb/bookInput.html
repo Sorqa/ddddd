@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org"></html>
+<head>
+    <meta charset="UTF-8">
+    <title>addForm</title>
+</head>
+<body>
+<h3>추가 폼</h3>
+<form id="bookaddForm" th:action="@{/book/bookAdd}" method="post">
+    <div>
+        <label for="title">제목</label>
+        <input type="text" name="title" id="title">
+    </div>
+    <div>
+        <label for="author">작성자</label>
+        <input type="text" name="author" id="author">
+    </div>
+    <div>
+        <label for="publisher">출판사</label>
+        <input type="text" name="publisher" id="publisher">
+    </div>
+    <div>
+        <label for="pubdate">출판일</label>
+        <input type="Date" name="pubdate" id="pubdate">
+    </div>
+    <div>
+        <label for="pages">쪽수</label>
+        <input type="number" name="pages" id="pages">
+    </div>
+    <div>
+        <label for="price">가격</label>
+        <input type="number" name="price" id="price">
+    </div>
+    <div>
+        <label for="cover">커버</label>
+        <!--<input type="file" name="cover" id="cover" accept="image/*">-->
+        <input type="text" name="cover" id="cover">
+    </div>
+    <div>
+        <button type="submit">추가</button>
+    </div>
+</form>
+
+</body>
+</html>

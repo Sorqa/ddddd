@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    <mapper namespace="com.web.mb.BookMapper">
+    <select id="searchBook"
+            resultType="com.web.mb.Book"
+            parameterType="map">
+        SELECT * FROM book
+        <where>
+            <if test="category.equalsIgnoreCase('title') ">
+                AND LOWER(title) = LOWER(#{keyword})
+            </if>
+            <if test="category.equalsIgnoreCase('author') ">
+                AND LOWER(author) = LOWER(#{keyword})
+            </if>
+        </where>
+
+    </select>
+
+    <select id="searchPrice"
+            resultType="com.web.mb.Book">
+        SELECT * FROM book WHERE price BETWEEN #{low} AND #{high}
+    </select>
+
+    <select id="searchAuthor"
+            resultType="com.web.mb.Book"
+            parameterType="String">
+        SELECT * FROM book
+        <where>
+            <if test="author != null ">
+                LOWER(author) = LOWER(#{author})
+            </if>
+        </where>
+    </select>
+
+    <select id="PubAndPrice"
+            resultType="com.web.mb.Book"
+            parameterType="com.web.mb.Book">
+        SELECT * FROM book
+        <where>
+           <if test="publisher != null">
+               AND LOWER(publisher) = LOWER(#{publisher})
+           </if>
+            <if test="price != 0">
+                AND price = #{price}
+            </if>
+        </where>
+
+    </select>
+
+    <select id="bookList"
+            resultType="com.web.mb.Book">
+        SELECT * FROM book
+    </select>
+
+    <insert id="bookAdd" parameterType="com.web.mb.Book">
+        <selectKey keyProperty="no" resultType="int" order="BEFORE">
+            SELECT book_seq.NEXTVAL FROM dual
+        </selectKey>
+        INSERT INTO book (no, title, author, publisher, pubdate, pages, price, cover)
+        VALUES (#{no}, #{title}, #{author}, #{publisher}, TO_DATE(#{pubdate}, 'YYYY-MM-DD'), #{pages}, #{price}, #{cover})
+    </insert>
+
+    <select id="getBook"
+            resultType="com.web.mb.Book">
+        SELECT * FROM book WHERE no = #{no}
+    </select>
+
+    <update id="updateBook" parameterType="com.web.mb.Book" >
+            UPDATE book SET pubdate = TO_DATE(#{pubdate}, 'YYYY-MM-DD'), price = #{price} WHERE no = ${no}
+    </update>
+
+    <delete id="deletedBook">
+        DELETE FROM book WHERE no = ${no}
+    </delete>
+
+    <select id="getList"
+            resultType="com.web.mb.Book">
+        SELECT * FROM book
+    </select>
+    </mapper>

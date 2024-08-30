@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org"></html>
+<head>
+  <meta charset="UTF-8">
+  <title>empUpdate</title>
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+  <script>
+    function delEmp(empno) {
+      if(!confirm('정말로 삭제할까요?')) return;
+      $.ajax({
+        url:'/emp/del/' + empno,
+        method:'get',
+        cache:false,
+        dataType:'json',
+        success:function(res) {
+          alert(res.deleted ? '삭제 성공':'실패');
+        },
+        error:function(xhr,status,err) {
+          alert('에러:' + err);
+        }
+      });
+    }
+  </script>
+</head>
+<body>
+<h3>직무하고 급여 수정하기</h3>
+<form  th:action="@{/emp/update}" th:object="${emp}" method="post">
+  <input type="hidden" th:field="*{empno}">
+<div><label>사번</label>
+  <span th:text="${emp.empno}"></span>
+</div>
+<div><label>이름</label>
+  <span th:text="${emp.ename}"></span>
+</div>
+<div><label>직무</label>
+  <input type="text" th:field="*{job}">
+</div>
+<div><label>급여</label>
+  <input type="text" th:field="*{sal}">
+</div>
+<div><label>입사일</label>
+  <span th:text="${emp.hiredate}"></span>
+</div>
+  <button type="submit">제출</button>
+  <button type="reset">취소</button>
+</form>
+</body>
+</html>

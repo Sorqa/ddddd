@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Home Page</title>
+</head>
+<body>
+<h1>Welcome to Spring Boot with IntelliJ!</h1>
+<!--
+<div th:text="${'이름' + emp.ename}"></div>
+<div th:text="${ '직무' + emp.job}"></div>
+<div th:text="${ '급여' + emp.sal}"></div>
+<div th:text="${ '입사' + emp.hiredate}"></div>
+<div th:text="${'리스트' + list}"></div>-->
+
+<div th:each="e:${list}">
+  <span th:text="${e.empno}"></span> /
+    <span th:text="${e.ename}"></span> /
+  <span th:text="${#numbers.formatInteger(e.sal, 3, 'COMMA') + '원'}"></span>
+</div>
+</body>
+</html>

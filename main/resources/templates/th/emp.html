@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>사원정보 상세보기</title>
+  <style>
+    div{border-bottom:1px solid black; width:13em; padding:0.3em 1em;}
+    div >label { display:inline-block; width:3em; padding-right: 1em; border-right:1px solid black; }
+    div > span {padding-left:1em; }
+  </style>
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+  <script>
+    function delEmp(empno) {
+      if(!confirm('정말로 삭제할까요?')) return;
+      $.ajax({
+        url:'/emp/del/' + empno,
+        method:'get',
+        cache:false,
+        dataType:'json',
+        success:function(res) {
+          alert(res.deleted ? '삭제 성공':'실패');
+        },
+        error:function(xhr,status,err) {
+          alert('에러:' + err);
+        }
+      });
+    }
+  </script>
+</head>
+<body>
+<main th:object="${emp}">
+  <h3>사원정보 상세보기</h3>
+  <div><label>사번</label>
+    <span th:text="*{empno}"></span>
+  </div>
+  <div><label>이름</label>
+    <span th:text="*{ename}"></span>
+  </div>
+  <div><label>직무</label>
+    <span th:text="*{job}"></span>
+  </div>
+  <div><label>급여</label>
+    <span th:text="*{sal}"></span>
+  </div>
+  <div><label>입사일</label>
+    <span th:text="*{hiredate}"></span>
+  </div>
+  <p>
+    <a th:href="@{'/emp/update/'+ *{empno}}"><button>수정</button></a>
+    <a th:href="${'javascript:delEmp('+ empno +')'}"><button>삭제</button></a>
+    <a th:href="|javascript:delEmp(*{empno})|"><button>삭제</button></a>  <!--()안에만 문자열이다 덧셈없이 문자열 조작-->
+
+    <a th:href="@{/emp/list}"><button>목록</button></a>
+  </p>
+</main>
+</body>
+</html>
